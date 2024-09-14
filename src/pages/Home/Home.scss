@@ -1,0 +1,276 @@
+.registration-section {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    padding-top: 50px;
+
+    &__content {
+        width: 100%;
+        margin-right: 100px;
+    }
+    &__title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    &__description {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    &__button {
+        background-color: var(--primary);
+        color: white;
+        padding: 15px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, box-shadow 0.3s;
+
+        &:hover {
+            background-color: #003399;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    &__image {
+        width: 55%;
+
+        img {
+            width: 100%;
+            height: 80%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+        max-width: 100%;
+        position: relative;
+    }
+}
+.real-estate-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 160px;
+    background-color: #f9f9f9;
+
+    .real-estate-content {
+        width: 40%;
+        padding-right: 20px;
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #666;
+        }
+    }
+
+    .real-estate-image {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+
+        img {
+            height: auto;
+            border-radius: 10px;
+        }
+    }
+
+    .notification-section {
+        width: 20%;
+        background-color: #005480;
+        padding: 20px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .notify-button {
+            background-color: white;
+            color: #005480;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #fff5cc;
+            }
+        }
+    }
+}
+
+.reasons-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px 40px;
+    background-color: #fff;
+
+    .reasons-images {
+        position: relative;
+        width: 50%;
+
+        img {
+            border-radius: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+        .image1 {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 45%;
+            border-radius: 10px;
+        }
+
+        .image2 {
+            position: absolute;
+            top: -300px;
+            left: 51%;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .reasons-content {
+        width: 45%;
+        padding-left: 40px;
+
+        h2 {
+            font-weight: 300;
+            font-size: 30px;
+            margin-bottom: 40px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                font-size: 16px;
+                margin-bottom: 30px;
+                position: relative;
+                padding-left: 60px;
+
+                &:before {
+                    content: '✔️';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-size: 18px;
+                    color: #ff9900;
+                }
+            }
+        }
+    }
+}
+
+.news-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+
+    .news-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .news-item {
+        display: flex;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        .news-image {
+            width: 30%;
+            height: 100%;
+            object-fit: cover;
+            border-right: 1px solid #ddd;
+        }
+
+        .news-content {
+            padding: 10px;
+            flex: 1;
+
+            .news-heading {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .news-description {
+                font-size: 14px;
+                margin-bottom: 10px;
+                color: #555;
+            }
+
+            .news-date {
+                font-size: 12px;
+                color: #999;
+            }
+        }
+    }
+}
