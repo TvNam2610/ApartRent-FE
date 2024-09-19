@@ -1,36 +1,75 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import Header from '../../components/Header/header';
-import FilterBar from '../../components/Filter/FilterBar'; // Import FilterBar
+import Footer from '../../components/Footer/Footer';
+import FilterBar from '../../components/Filter/FilterBar';
+import Card from '../../components/Card/Card';
+import Map from '../../components/Map/Map';
+
 import './ListProperty.scss';
 
 function PropertyList() {
     const location = useLocation();
     // eslint-disable-next-line no-unused-vars
-    const [transactionType, setTransactionType] = useState('rent'); // Mặc định là "rent"
-    const [filteredData, setFilteredData] = useState([]); // Dữ liệu sau khi lọc
-    const [allProperties] = useState([
+    const [transactionType, setTransactionType] = useState('rent'); 
+    const [filteredData, setFilteredData] = useState([]); 
+
+    const properties = [
         {
             id: 1,
-            title: 'Căn hộ cao cấp 1 phòng ngủ',
-            location: 'Quận 1, Hồ Chí Minh',
-            price: 30000000, // Giá 30 triệu
-            transactionType: 'rent', // Loại giao dịch là "thuê"
-            features: ['swimming_pool', 'gym', 'parking'],
-            bedrooms: 1, // Số phòng ngủ
+            title: 'Cho thuê căn hộ chung cư 3 phòng ngủ',
+            location: 'Quận 2, Hồ Chí Minh',
+            bedrooms: 3,
+            bathrooms: 2,
+            area: 127.3,
+            floor: 13,
+            price: '71,000,000',
+            priceType: 'rent',
+            features: ['Swimming pool', 'Air conditioning', 'Gym', 'Internet', 'Security', 'Car park'],
+            images: [
+                'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTFkNjUzLTZjMzQtN2NjYS05NzMxLTcyZDdlNTA0MDZlZC8wMTkxZDY1My04ZWJhLTcyY2UtOGFkNy05NjY0OTMzNWJmMWMuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
+                'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTE3ZTMwLThlMGQtNzIyNi1hMWQ2LTUwZTgyZTVjYjViYi8wMTkxN2UzMC04Zjc1LTcxMjUtODVhMC01YTIzNjVkZWU4NDQuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
+            ],
+            isNew: true,
         },
         {
             id: 2,
-            title: 'Nhà phố 2 phòng ngủ',
-            location: 'Quận 2, Hồ Chí Minh',
-            price: 5000000, // Giá 5 triệu
-            transactionType: 'buy', // Loại giao dịch là "mua"
-            features: ['security', 'parking'],
-            bedrooms: 2, // Số phòng ngủ
+            title: 'Căn bán căn hộ chung cư 1 phòng ngủ',
+            location: 'Thủ Dầu Một, Bình Dương',
+            bedrooms: 1,
+            bathrooms: 1,
+            area: 60,
+            floor: 11,
+            price: '2.88 tỷ',
+            priceType: 'buy',
+            features: ['Air conditioning', 'Car park', 'Balcony', 'Built-in wardrobe'],
+            images: [
+                'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTE3ZTMwLThlMGQtNzIyNi1hMWQ2LTUwZTgyZTVjYjViYi8wMTkxN2UzMC05MDMzLTczOTctYmZmYi02NDAwMmJmYTg2YTYuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
+                'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTE3ZDgxLTQzZTMtNzk5My04MzIzLTg5MmI0Y2YyNjhmYi8wMTkxN2VhMi1kOGY3LTcwNTQtOTEzOS0wZjAxYzNjNmZhMWQuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
+            ],
+            isNew: false,
         },
-    ]); // Danh sách toàn bộ bất động sản
+        {
+            id: 3,
+            title: 'Cho thuê căn hộ chung cư 3 phòng ngủ',
+            location: 'Quận 2, Hồ Chí Minh',
+            bedrooms: 3,
+            bathrooms: 2,
+            area: 127.3,
+            floor: 13,
+            price: '71,000,000',
+            priceType: 'rent',
+            features: ['Swimming pool', 'Air conditioning', 'Gym', 'Internet', 'Security', 'Car park'],
+            images: [
+                'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTFkNjUzLTZjMzQtN2NjYS05NzMxLTcyZDdlNTA0MDZlZC8wMTkxZDY1My04ZWJhLTcyY2UtOGFkNy05NjY0OTMzNWJmMWMuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
+                'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTE3ZTMwLThlMGQtNzIyNi1hMWQ2LTUwZTgyZTVjYjViYi8wMTkxN2UzMC04Zjc1LTcxMjUtODVhMC01YTIzNjVkZWU4NDQuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
+            ],
+            isNew: true,
+        },
+    ];
 
-    // Xác định loại giao dịch (mua/thuê) dựa trên URL
+
     useEffect(() => {
         if (location.pathname === '/for-rent') {
             setTransactionType('rent');
@@ -41,13 +80,9 @@ function PropertyList() {
 
     // Hàm xử lý khi có thay đổi trong FilterBar
     const handleFilterChange = (filters) => {
-        const filtered = allProperties.filter((property) => {
+        const filtered = properties.filter((property) => {
             // Lọc theo loại giao dịch
-            if (filters.transactionType && filters.transactionType !== property.transactionType) {
-                return false;
-            }
-
-            if (filters.priceRange && !isWithinPriceRange(property.price, filters.priceRange)) {
+            if (filters.transactionType && filters.transactionType !== property.priceType) {
                 return false;
             }
 
@@ -56,6 +91,7 @@ function PropertyList() {
                 return false;
             }
 
+            // Tìm kiếm từ khóa
             if (
                 filters.searchQuery &&
                 !property.title.toLowerCase().includes(filters.searchQuery.toLowerCase()) &&
@@ -70,6 +106,11 @@ function PropertyList() {
                 if (!hasAllFeatures) return false;
             }
 
+            // Lọc theo khoảng giá
+            if (filters.priceRange && !isWithinPriceRange(property.price, filters.priceRange)) {
+                return false;
+            }
+
             return true;
         });
 
@@ -78,8 +119,9 @@ function PropertyList() {
 
     // Hàm kiểm tra giá có nằm trong khoảng được chọn không
     const isWithinPriceRange = (price, priceRange) => {
+        const priceValue = Number(price.replace(/[^\d]/g, '')); // Chuyển giá thành số
         const [minPrice, maxPrice] = priceRange.split('-').map(Number);
-        return (!minPrice || price >= minPrice) && (!maxPrice || price <= maxPrice);
+        return (!minPrice || priceValue >= minPrice) && (!maxPrice || priceValue <= maxPrice);
     };
 
     return (
@@ -89,27 +131,22 @@ function PropertyList() {
                 {/* Truyền hàm handleFilterChange cho FilterBar */}
                 <FilterBar onFilterChange={handleFilterChange} />
 
-                {/* Danh sách bất động sản đã lọc */}
-                <div className="property-list">
-                    {filteredData.length > 0 ? (
-                        filteredData.map((property) => (
-                            <div key={property.id} className="property-card">
-                                <h3>{property.title}</h3>
-                                <p>{property.location}</p>
-                                <p>{property.price} VND</p>
-                                <p>{property.bedrooms} phòng ngủ</p>
-                                <div className="property-features">
-                                    {property.features.map((feature, index) => (
-                                        <span key={index}>{feature}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <p>Không có bất động sản nào phù hợp</p>
-                    )}
+                <div className='property-list-container'>
+                    <div className="property-list">
+                        {filteredData.length > 0 ? (
+                            filteredData.map((property) => (
+                                <Card key={property.id} property={property} className="property-card" />
+                            ))
+                        ) : (
+                            <p>Không có bất động sản nào phù hợp</p>
+                        )}
+                    </div>
+                    <div className='mapContainer'>
+                        <Map properties={filteredData.length > 0 ? filteredData : properties} />
+                    </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 }

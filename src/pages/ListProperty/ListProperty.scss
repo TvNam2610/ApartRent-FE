@@ -1,15 +1,14 @@
 .property-list-page {
-    // padding: 20px;
-
-    .property-list {
+    .property-list-container {
+        background-color: #efefef;
         display: flex;
-        flex-wrap: wrap;
+        padding: 30px 60px;
         gap: 20px;
+        justify-content: center;
     }
 
     .property-card {
         flex: 1 1 calc(33.333% - 20px);
-        padding: 20px;
         border: 1px solid #ddd;
         border-radius: 8px;
         background-color: #f9f9f9;
@@ -19,11 +18,6 @@
             font-size: 18px;
             margin-bottom: 10px;
             color: #333;
-        }
-
-        p {
-            margin: 8px 0;
-            color: #555;
         }
 
         .property-features {

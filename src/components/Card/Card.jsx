@@ -1,6 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import './PropertyCard.scss';
+
+import location from '../../assets/img/pin.png';
+import bed from '../../assets/img/bed.png';
+import bath from '../../assets/img/bath.png';
+import size from '../../assets/img/size.png';
+import floor from '../../assets/img/floor.png';
+import save from '../../assets/img/save.png';
+import chat from '../../assets/img/chat.png';
+
+import './Card.scss';
 
 const PropertyCard = ({ property }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -17,8 +26,8 @@ const PropertyCard = ({ property }) => {
         <div className="property-card">
             <div className="property-card__image">
                 <img src={property.images[currentImageIndex]} alt={property.title} />
-                <div className="property-card__badge">{property.isNew ? 'Mới' : ''}</div>
-                {/* Nút điều hướng qua các ảnh */}
+                {/* <div className="property-card__badge">{property.isNew ? 'Mới' : ''}</div> */}
+
                 <button className="property-card__prev" onClick={handlePreviousImage}>
                     &lt;
                 </button>
@@ -27,12 +36,28 @@ const PropertyCard = ({ property }) => {
                 </button>
             </div>
             <div className="property-card__details">
-                <h2 className="property-card__title">{property.title}</h2>
-                <p className="property-card__location">{property.location}</p>
+                <div className="property-card__title">{property.title}</div>
+                <p className="property-card__location">
+                    <img src={location}></img>
+                    <span>{property.location}</span>
+                </p>
                 <div className="property-card__info">
-                    <span>{property.bedrooms} phòng ngủ</span>
-                    <span>{property.bathrooms} phòng tắm</span>
-                    <span>{property.area} m²</span>
+                    <span>
+                        <img src={bed}></img>
+                        {property.bedrooms}
+                    </span>
+                    <span>
+                        <img src={bath}></img>
+                        {property.bathrooms}
+                    </span>
+                    <span>
+                        <img src={size}></img>
+                        {property.area} m²
+                    </span>
+                    <span>
+                        <img className="floor" src={floor}></img>
+                        Tầng {property.floor}
+                    </span>
                 </div>
                 <div className="property-card__features">
                     {property.features.slice(0, 5).map((feature, index) => (
@@ -45,10 +70,17 @@ const PropertyCard = ({ property }) => {
                     )}
                 </div>
                 <div className="property-card__footer">
-                    <span className="property-card__price">
+                    <span className="price">
                         {property.price} {property.priceType === 'rent' ? '/ tháng' : ''}
                     </span>
-                    <button className="property-card__action">Call</button>
+                    <span className="icons">
+                        <div className="icon">
+                            <img src={save} alt="" />
+                        </div>
+                        <div className="icon">
+                            <img src={chat} alt="" />
+                        </div>
+                    </span>
                 </div>
             </div>
         </div>

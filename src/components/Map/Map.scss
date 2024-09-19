@@ -1,0 +1,13 @@
+.mapContainer {
+    flex: 1; /* Giúp mapContainer mở rộng tự động nhưng không vượt quá bố cục */
+    height: 700px; /* Đặt chiều cao cố định cho bản đồ */
+    max-width: 500px; /* Giới hạn chiều rộng tối đa của bản đồ */
+    width: 100%; /* Chiếm toàn bộ chiều rộng của phần chứa */
+  }
+  
+  .map {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
