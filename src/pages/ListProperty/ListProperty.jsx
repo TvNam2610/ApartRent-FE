@@ -12,14 +12,14 @@ import './ListProperty.scss';
 function PropertyList() {
     const location = useLocation();
     // eslint-disable-next-line no-unused-vars
-    const [transactionType, setTransactionType] = useState('rent'); 
-    const [filteredData, setFilteredData] = useState([]); 
+    const [transactionType, setTransactionType] = useState('rent');
+    const [filteredData, setFilteredData] = useState([]);
 
     const properties = [
         {
             id: 1,
             title: 'Cho thuê căn hộ chung cư 3 phòng ngủ',
-            location: 'Quận 2, Hồ Chí Minh',
+            location: 'Cầu Giấy, Hà Nội',
             bedrooms: 3,
             bathrooms: 2,
             area: 127.3,
@@ -53,7 +53,7 @@ function PropertyList() {
         {
             id: 3,
             title: 'Cho thuê căn hộ chung cư 3 phòng ngủ',
-            location: 'Quận 2, Hồ Chí Minh',
+            location: 'Hà Nội',
             bedrooms: 3,
             bathrooms: 2,
             area: 127.3,
@@ -68,7 +68,6 @@ function PropertyList() {
             isNew: true,
         },
     ];
-
 
     useEffect(() => {
         if (location.pathname === '/for-rent') {
@@ -131,7 +130,7 @@ function PropertyList() {
                 {/* Truyền hàm handleFilterChange cho FilterBar */}
                 <FilterBar onFilterChange={handleFilterChange} />
 
-                <div className='property-list-container'>
+                <div className="property-list-container">
                     <div className="property-list">
                         {filteredData.length > 0 ? (
                             filteredData.map((property) => (
@@ -141,12 +140,12 @@ function PropertyList() {
                             <p>Không có bất động sản nào phù hợp</p>
                         )}
                     </div>
-                    <div className='mapContainer'>
+                    <div className="mapContainer">
                         <Map properties={filteredData.length > 0 ? filteredData : properties} />
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }
