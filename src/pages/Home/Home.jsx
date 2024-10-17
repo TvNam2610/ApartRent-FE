@@ -1,9 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from 'react';
 
-import Header from '../../components/Header/header';
 import Banner from '../../components/Banner/banner';
-import Footer from '../../components/Footer/Footer';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
 
 import Image1 from '../../assets/img/apart1.jpg';
@@ -14,6 +12,8 @@ import Image4 from '../../assets/img/apart3.jpg';
 import { newsData } from '../../services/data';
 
 import './Home.scss';
+import Header from '../../components/Header/header';
+import Footer from '../../components/Footer/Footer';
 
 function Home() {
     const [showForm, setShowForm] = useState(false);
@@ -113,7 +113,6 @@ function Home() {
                     ))}
                 </div>
             </section>
-
             <Footer />
         </>
     );

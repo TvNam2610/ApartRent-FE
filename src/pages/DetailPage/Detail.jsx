@@ -1,9 +1,8 @@
-import Header from '../../components/Header/header';
-import Footer from '../../components/Footer/Footer';
+import { useLoaderData } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import Map from '../../components/Map/Map';
 
-import location from '../../assets/img/pin.png';
+import locationIcon from '../../assets/img/pin.png';
 import avatar from '../../assets/img/avatar.jpg';
 import chat from '../../assets/img/chat.png';
 import save from '../../assets/img/save.png';
@@ -13,41 +12,45 @@ import floor from '../../assets/img/floor.png';
 import size from '../../assets/img/size.png';
 
 import './Detail.scss';
-
-const images = [
-    'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTFkNjUzLTZjMzQtN2NjYS05NzMxLTcyZDdlNTA0MDZlZC8wMTkxZDY1My04ZWJhLTcyY2UtOGFkNy05NjY0OTMzNWJmMWMuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
-    'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTE3ZTMwLThlMGQtNzIyNi1hMWQ2LTUwZTgyZTVjYjViYi8wMTkxN2UzMC04Zjc1LTcxMjUtODVhMC01YTIzNjVkZWU4NDQuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
-    'https://pix.dotproperty.co.th/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzAxOTE3ZDgxLTQzZTMtNzk5My04MzIzLTg5MmI0Y2YyNjhmYi8wMTkxN2VhMi1kOGY3LTcwNTQtOTEzOS0wZjAxYzNjNmZhMWQuanBnIiwiYnJhbmQiOiJET1RQUk9QRVJUWSIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NDkwLCJoZWlnaHQiOjMyNSwiZml0IjoiY292ZXIifX19',
-];
+import { formatCurrencyVN } from '../../lib/formatCurrency';
+import DOMPurify from 'dompurify';
 
 function Detail() {
+    const post = useLoaderData();
+    console.log(post);
+
+    const { title, content, realEstate, user } = post;
+
     return (
         <>
-            <Header />
-
             <div className="detailPage">
                 <div className="details">
                     <div className="wrapper">
-                        <Slider images={images} />
+                        <Slider images={realEstate.images} /> {/* Hiển thị hình ảnh từ realEstate */}
                         <div className="info">
                             <div className="top">
                                 <div className="post">
-                                    <h1>tên dự án</h1>
+                                    <h1>{title}</h1> {/* Hiển thị tên dự án */}
                                     <div className="address">
-                                        <img src={location} alt="" />
-                                        <span>address</span>
+                                        <img src={locationIcon} alt="Location" />
+                                        <span>{realEstate.location}</span> {/* Hiển thị địa chỉ */}
                                     </div>
-                                    <div className="price">1.000.000.000 VNĐ</div>
+                                    <div className="price">{formatCurrencyVN(realEstate.price)} VNĐ</div>{' '}
+                                    {/* Hiển thị giá */}
                                 </div>
                                 <div className="user">
-                                    <img src={avatar} alt="" />
-                                    <span>user name</span>
+                                    <img src={user.avatar || avatar} alt="User avatar" />
+                                    <span>{user.username}</span> {/* Hiển thị tên người đăng */}
                                 </div>
                             </div>
                             <div className="bottom">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis at laudantium in qui,
-                                voluptatibus est nihil autem. Tenetur in iste nesciunt, magnam aut iusto blanditiis nemo
-                                tempora minus nam eligendi.
+                                <div>{content}</div>
+                                <div
+                                    style={{ color: '#333' }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(realEstate.description),
+                                    }}
+                                ></div>
                             </div>
                         </div>
                     </div>
@@ -58,55 +61,50 @@ function Detail() {
                         <p className="title">General</p>
                         <div className="general">
                             <div className="key-feature">
-                                <img src={bed} alt="" />
-                                <span>Phòng ngủ: 2</span>
+                                <img src={bed} alt="Bedroom icon" />
+                                <span>Phòng ngủ: {realEstate.bedrooms}</span>
                             </div>
                             <div className="key-feature">
-                                <img src={bath} alt="" />
-                                <span>Phòng tắm: 2</span>
+                                <img src={bath} alt="Bathroom icon" />
+                                <span>Phòng tắm: {realEstate.bathrooms}</span>
                             </div>
                             <div className="key-feature">
-                                <img src={size} alt="" />
+                                <img src={size} alt="Size icon" />
                                 <span>
-                                    Diện tích: 2m<sup>2</sup>
+                                    Diện tích: {realEstate.area}m<sup>2</sup>
                                 </span>
                             </div>
                             <div className="key-feature">
-                                <img src={floor} alt="" />
-                                <span>Tầng: 22</span>
+                                <img src={floor} alt="Floor icon" />
+                                <span>Tầng: {realEstate.floor}</span>
                             </div>
                         </div>
-
                         <p className="title">Features</p>
                         <div className="list-feature">
-                            <div className="feature">parking area</div>
-                            <div className="feature">parking area</div>
-                            <div className="feature">parking area</div>
-                            <div className="feature">parking area</div>
-                            <div className="feature">parking area</div>
-                            <div className="feature">parking area</div>
-                            <div className="feature">parking area</div>
+                            {realEstate.features.map((feature, index) => (
+                                <div className="feature" key={index}>
+                                    {feature}
+                                </div>
+                            ))}
                         </div>
-
-                        <p className="title">location</p>
+                        {console.log(realEstate.features)}
+                        <p className="title">Location</p>
                         <div className="mapContainer">
-                            <Map properties={images} />
+                            <Map properties={[realEstate]} /> {/* Truyền dữ liệu cho bản đồ */}
                         </div>
-
                         <div className="buttons">
                             <button>
-                                <img src={chat} alt="" />
+                                <img src={chat} alt="Chat" />
                                 Send a message
                             </button>
                             <button>
-                                <img src={save} alt="" />
-                                Save the palace
+                                <img src={save} alt="Save" />
+                                Save the place
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

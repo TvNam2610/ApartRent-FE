@@ -3,11 +3,11 @@
     height: 700px; /* Đặt chiều cao cố định cho bản đồ */
     max-width: 500px; /* Giới hạn chiều rộng tối đa của bản đồ */
     width: 100%; /* Chiếm toàn bộ chiều rộng của phần chứa */
-  }
-  
-  .map {
+}
+
+.map {
     height: 100%;
     width: 100%;
     border-radius: 10px;
-  }
-  
+    z-index: 1;
+}
