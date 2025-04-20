@@ -9,7 +9,7 @@ import Image2 from '../../assets/img/Magazine.png';
 import Image3 from '../../assets/img/apart2.jpg';
 import Image4 from '../../assets/img/apart3.jpg';
 
-import { newsData } from '../../services/data';
+// import { newsData } from '../../services/data';
 
 import './Home.scss';
 import Header from '../../components/Header/header';
@@ -100,7 +100,7 @@ function Home() {
 
             <section className="news-section">
                 <h2 className="news-title">Tin tức</h2>
-                <div className="news-grid">
+                {/* <div className="news-grid">
                     {newsData.map((news, index) => (
                         <div key={index} className="news-item">
                             <img src={news.image} alt={news.title} className="news-image" />
@@ -111,7 +111,7 @@ function Home() {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </section>
             <Footer />
         </>

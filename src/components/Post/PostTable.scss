@@ -1,0 +1,45 @@
+
+    table {
+      border-radius: 8px;
+      overflow: hidden;
+  
+      thead {
+        background-color: #f8f9fa;
+        font-size: 16px;
+      }
+  
+      td, th {
+        vertical-align: middle;
+        padding: 14px 12px;
+      }
+  
+      img {
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+  
+      .text-muted {
+        font-size: 13px;
+      }
+  
+      .text-primary {
+        font-weight: bold;
+      }
+  
+      .badge {
+        font-size: 12px;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 999px;
+      }
+  
+      .dropdown-toggle {
+        border: none !important;
+        background-color: transparent;
+        font-size: 18px;
+      }
+    }
+
+  

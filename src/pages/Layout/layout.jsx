@@ -1,4 +1,4 @@
-import './layout.scss';
+// import './layout.scss';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext.jsx';

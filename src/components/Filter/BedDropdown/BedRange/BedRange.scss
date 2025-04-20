@@ -1,0 +1,42 @@
+.bed-range-slider {
+    padding: 16px;
+    font-family: Arial, sans-serif;
+    color: #333;
+
+    label {
+        font-weight: bold;
+        font-size: 18px;
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    .bed-options {
+        display: flex;
+        justify-content: space-around;
+        gap: 8px;
+    }
+
+    .bed-option {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        background-color: #f0f0f0;
+        font-size: 16px;
+        color: #333;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:hover {
+            background-color: #e0e0e0;
+        }
+
+        &.selected {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+    }
+}

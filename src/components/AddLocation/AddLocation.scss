@@ -1,0 +1,45 @@
+// General styling for the wrapper of the dropdowns
+.css_select_div {
+    display: flex;
+    flex-direction: column; // This will align the select elements vertically
+    justify-content: center; // Center them vertically within the parent container
+    align-items: center; // Center them horizontally within the parent container
+    width: 100%; // Ensure the parent div takes up full width
+    max-width: 500px; // Restrict maximum width for better readability
+    margin: 0 auto; // Center the container on the page
+    padding: 20px 0; // Add padding at the top and bottom of the div
+}
+
+// Styling for each dropdown (select element)
+.css_select {
+    width: 100%; // Make the select elements take up the full width of their parent container
+    padding: 12px; // Add padding inside the select elements for better readability
+    margin: 10px 0; // Add vertical space between the dropdowns
+    border: 1px solid #ccc; // Subtle border color for the dropdowns
+    border-radius: 5px; // Rounded corners for a smoother look
+    font-size: 16px; // Increase the font size for better readability
+    background-color: #fff; // Set background color to white for clarity
+    transition: all 0.3s ease; // Add smooth transition effects for interactivity
+
+    &:hover {
+        border-color: #007bff; // Change border color on hover to give a visual cue
+    }
+
+    &:focus {
+        outline: none; // Remove the default outline on focus
+        border-color: #007bff; // Highlight the select box with blue color when focused
+    }
+}
+
+// Optional: Styling for the options inside the dropdown
+.css_select option {
+    padding: 10px; // Add padding inside each option for better readability
+    font-size: 16px; // Ensure the font size inside options is consistent
+    background-color: #fff; // Set background color to white
+    color: #333; // Set text color to dark gray for better contrast
+    transition: background-color 0.2s ease; // Smooth background color transition
+}
+
+.css_select option:hover {
+    background-color: #f0f0f0; // Light gray hover effect for options
+}

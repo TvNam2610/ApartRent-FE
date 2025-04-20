@@ -1,15 +1,21 @@
-import { useContext, useState } from 'react';
 import './ProfileUpdate.scss';
-import { AuthContext } from '../../context/authContext.jsx';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/authContext';
 import apiRequest from '../../lib/apiRequest';
 import { useNavigate } from 'react-router-dom';
-import UploadWidget from '../../components/uploadWidget/uploadWidget.jsx';
+import UploadWidget from '../../components/uploadWidget/uploadWidget';
 import Noavatar from '../../assets/img/noavatar.jpg';
+import AddressSelector from '../../components/AddLocation/AddLocation';
 
 function ProfileUpdatePage() {
     const { currentUser, updateUser } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [avatar, setAvatar] = useState([]);
+    const [address, setAddress] = useState({
+        city: currentUser?.address?.city || '',
+        district: currentUser?.address?.district || '',
+        ward: currentUser?.address?.ward || '',
+    });
 
     const navigate = useNavigate();
 
@@ -17,21 +23,40 @@ function ProfileUpdatePage() {
         e.preventDefault();
         const formData = new FormData(e.target);
 
-        const { username, email, password } = Object.fromEntries(formData);
+        const { username, email, password, phone } = Object.fromEntries(formData);
 
         try {
+            console.log('Sending data to API:', {
+                username,
+                email,
+                password,
+                phone,
+                avatar: avatar[0],
+                address,
+            });
+
             const res = await apiRequest.put(`/users/${currentUser.id}`, {
                 username,
                 email,
                 password,
+                phone,
                 avatar: avatar[0],
+                address,
             });
             updateUser(res.data);
             navigate('/profile');
         } catch (err) {
-            console.log(err);
-            setError(err.response.data.message);
+            console.error('Error updating user:', err);
+            setError(err.response?.data?.message || 'Failed to update user!');
         }
+    };
+
+    const handleAddressChange = (selectedAddress) => {
+        setAddress({
+            city: selectedAddress.city || '',
+            district: selectedAddress.district || '',
+            ward: selectedAddress.ward || '',
+        });
     };
 
     return (
@@ -39,20 +64,43 @@ function ProfileUpdatePage() {
             <div className="formContainer">
                 <form onSubmit={handleSubmit}>
                     <h1>Update Profile</h1>
-                    <div className="item">
-                        <label htmlFor="username">Username</label>
-                        <input id="username" name="username" type="text" defaultValue={currentUser.username} />
+                    <div className="form">
+                        <div className="left">
+                            <div className="item">
+                                <label htmlFor="username">Username</label>
+                                <input id="username" name="username" type="text" defaultValue={currentUser.username} />
+                            </div>
+                            <div className="item">
+                                <label htmlFor="email">Email</label>
+                                <input id="email" name="email" type="email" defaultValue={currentUser.email} />
+                            </div>
+                            <div className="item">
+                                <label htmlFor="password">Password</label>
+                                <input id="password" name="password" type="password" />
+                            </div>
+                            <div className="item">
+                                <label htmlFor="phone">Phone Number</label>
+                                <input id="phone" name="phone" type="text" defaultValue={currentUser.phone} />
+                            </div>
+                        </div>
+                        <div className="right">
+                            <div className="item">
+                                <label>Địa chỉ</label>
+                                <AddressSelector
+                                    onAddressChange={(selected) =>
+                                        handleAddressChange({
+                                            city: selected.city, // Sửa lại để trùng với AddressSelector
+                                            district: selected.district,
+                                            ward: selected.ward,
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div className="item">
-                        <label htmlFor="email">Email</label>
-                        <input id="email" name="email" type="email" defaultValue={currentUser.email} />
-                    </div>
-                    <div className="item">
-                        <label htmlFor="password">Password</label>
-                        <input id="password" name="password" type="password" />
-                    </div>
-                    <button>Update</button>
-                    {error && <span>error</span>}
+
+                    <button>Cập nhật</button>
+                    {error && <span>{error}</span>}
                 </form>
             </div>
             <div className="sideContainer">

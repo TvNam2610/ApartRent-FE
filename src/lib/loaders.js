@@ -7,10 +7,8 @@ export const singlePageLoader = async ({ request, params }) => {
     return res.data;
 };
 export const listPageLoader = async ({ request }) => {
-    const urlParams = new URL(request.url);
-    const type = urlParams.pathname === "/for-rent" ? "rent" : "buy";
-    console.log("API request:", `/posts?type=${type}`); // Log để kiểm tra URL
-    const postPromise = apiRequest(`/posts/?type=${type}`);
+    console.log("API request:", `/posts`);
+    const postPromise = apiRequest("/posts/");
 
     return defer({
         postResponse: postPromise,
@@ -19,9 +17,16 @@ export const listPageLoader = async ({ request }) => {
 
 export const profilePageLoader = async () => {
     const postPromise = apiRequest("/users/profilePosts");
-    const chatPromise = apiRequest("/chats");
+    const chatPromise = apiRequest("/chat");
     return defer({
         postResponse: postPromise,
+        chatResponse: chatPromise,
+    });
+};
+
+export const ChatPageLoader = async () => {
+    const chatPromise = apiRequest("/chat");
+    return defer({
         chatResponse: chatPromise,
     });
 };

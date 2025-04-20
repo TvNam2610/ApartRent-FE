@@ -1,120 +1,118 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useLoaderData } from 'react-router-dom';
-
-// import Footer from '../../components/Footer/Footer';
+import ReactPaginate from 'react-paginate';
 import FilterBar from '../../components/Filter/FilterBar';
 import Card from '../../components/Card/Card';
-import Map from '../../components/Map/Map';
 
 import './ListProperty.scss';
+import apiRequest from '../../lib/apiRequest';
 
 function PropertyList() {
-    const location = useLocation();
-    // eslint-disable-next-line no-unused-vars
-    const [transactionType, setTransactionType] = useState('rent');
-    const { postResponse } = useLoaderData();
     const [filteredData, setFilteredData] = useState([]);
+    const [filters, setFilters] = useState({
+        realEstateStatus: '',
+        priceRange: '',
+        areaRange: '',
+        searchQuery: '',
+        bedrooms: '',
+    });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
+    const itemsPerPage = 8;
 
-    useEffect(() => {
-        if (location.pathname === '/for-rent') {
-            setTransactionType('rent');
-        } else if (location.pathname === '/for-buy') {
-            setTransactionType('buy');
-        }
-    }, [location.pathname]);
+    const today = new Date().toLocaleDateString('vi-VN');
+
+    // Hàm để gọi API với các bộ lọc và phân trang
     useEffect(() => {
         const fetchProperties = async () => {
+            setLoading(true);
+            setError(null);
             try {
-                const posts = await postResponse;
-                console.log('Post response:', posts); // Kiểm tra dữ liệu nhận được
-                if (Array.isArray(posts.data)) {
-                    setFilteredData(posts.data);
+                const response = await apiRequest('/posts?postStatus=APPROVED', {
+                    params: { ...filters, page: currentPage + 1, limit: itemsPerPage },
+                });
+
+                if (response.data && Array.isArray(response.data.posts)) {
+                    setFilteredData(response.data.posts);
+                    console.log(response.data.posts);
+
+                    setTotalPages(response.data.totalPages);
+                    setTotalCount(response.data.totalCount);
                 } else {
-                    setFilteredData([]); // Đảm bảo filteredData luôn là mảng
+                    setFilteredData([]);
                 }
-                console.log('Filtered data:', filteredData);
-            } catch (error) {
-                console.error('Failed to load properties:', error);
-                setFilteredData([]); // Đặt mảng rỗng nếu có lỗi
+            } catch (err) {
+                console.error('Failed to load properties:', err);
+                setError('Không thể tải dữ liệu');
+                setFilteredData([]);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchProperties();
-    }, [postResponse]);
+    }, [filters, currentPage]);
 
     // Hàm xử lý khi có thay đổi trong FilterBar
-    const handleFilterChange = (filters) => {
-        if (!Array.isArray(filteredData)) {
-            console.error('filteredData is not an array');
-            return;
-        }
-        const filtered = filteredData.filter((property) => {
-            // Lọc theo loại giao dịch
-            if (filters.transactionType && filters.transactionType !== property.priceType) {
-                return false;
-            }
-
-            // Lọc theo số phòng ngủ
-            if (filters.bedrooms && filters.bedrooms !== '' && property.bedrooms.toString() !== filters.bedrooms) {
-                return false;
-            }
-
-            // Tìm kiếm từ khóa
-            if (
-                filters.searchQuery &&
-                !property.title.toLowerCase().includes(filters.searchQuery.toLowerCase()) &&
-                !property.location.toLowerCase().includes(filters.searchQuery.toLowerCase())
-            ) {
-                return false;
-            }
-
-            // Lọc theo tính năng
-            if (filters.features.length > 0) {
-                const hasAllFeatures = filters.features.every((feature) => property.features.includes(feature));
-                if (!hasAllFeatures) return false;
-            }
-
-            // Lọc theo khoảng giá
-            if (filters.priceRange && !isWithinPriceRange(property.price, filters.priceRange)) {
-                return false;
-            }
-
-            return true;
-        });
-
-        setFilteredData(filtered);
+    const handleFilterChange = (updatedFilters) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            ...updatedFilters,
+        }));
+        setCurrentPage(0); // Reset về trang đầu tiên khi thay đổi bộ lọc
     };
 
-    // Hàm kiểm tra giá có nằm trong khoảng được chọn không
-    const isWithinPriceRange = (price, priceRange) => {
-        const priceValue = Number(price.replace(/[^\d]/g, ''));
-        const [minPrice, maxPrice] = priceRange.split('-').map(Number);
-        return (!minPrice || priceValue >= minPrice) && (!maxPrice || priceValue <= maxPrice);
+    // Hàm chuyển trang khi sử dụng react-paginate
+    const handlePageClick = (event) => {
+        setCurrentPage(event.selected);
     };
 
     return (
-        <>
-            <div className="property-list-page">
-                {/* Truyền hàm handleFilterChange cho FilterBar */}
-                <FilterBar onFilterChange={handleFilterChange} />
+        <div className="property-list-page">
+            <FilterBar onFilterChange={handleFilterChange} />
 
-                <div className="property-list-container">
-                    <div className="property-list">
-                        {filteredData.length > 0 ? (
-                            filteredData.map((property) => (
-                                <Card key={property.id} property={property} className="property-card" />
-                            ))
-                        ) : (
-                            <p>Không có bất động sản nào phù hợp</p>
-                        )}
-                    </div>
-                    <div className="mapContainer">
-                        <Map properties={filteredData} />
-                    </div>
-                </div>
+            <div className="property-list-container">
+                {loading ? (
+                    <p>Đang tải dữ liệu...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : (
+                    <>
+                        {/* Phần thông báo số lượng tin đăng và ngày cập nhật */}
+                        <div className="property-header">
+                            <h2>
+                                Có {totalCount.toLocaleString('vi-VN')} tin đăng dành cho bạn được cập nhật mới nhất{' '}
+                                {today}
+                            </h2>
+                        </div>
+
+                        <div className="property-list">
+                            {filteredData.length > 0 ? (
+                                filteredData.map((property) => (
+                                    <Card key={property.id} property={property} className="property-card" />
+                                ))
+                            ) : (
+                                <p>Không có bất động sản nào phù hợp</p>
+                            )}
+                        </div>
+                        <ReactPaginate
+                            previousLabel={'Previous'}
+                            nextLabel={'Next'}
+                            breakLabel={'...'}
+                            pageCount={totalPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={'pagination'}
+                            activeClassName={'active'}
+                            forcePage={currentPage}
+                        />
+                    </>
+                )}
             </div>
-            {/* <Footer /> */}
-        </>
+        </div>
     );
 }
 

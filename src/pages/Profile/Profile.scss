@@ -1,38 +1,49 @@
 .profile {
     display: flex;
-    flex-direction: row;
-    height: 100%;
-    padding: 0 60px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 30px;
 
     .details {
-        flex: 3;
-        padding-bottom: 50px;
-        height: 100vh;
-        overflow-y: scroll;
+        width: 100%;
+        max-width: 800px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        padding: 25px;
 
         .wrapper {
-            padding-right: 50px;
             display: flex;
             flex-direction: column;
+            gap: 25px;
 
             .title {
                 display: flex;
-                align-items: center;
                 justify-content: space-between;
+                align-items: center;
 
                 h1 {
-                    font-weight: 300;
+                    font-size: 1.8rem;
+                    font-weight: 600;
+                    color: #343a40;
+                    margin: 0;
                 }
 
-                button {
-                    transition: all linear 0.2s;
-                    padding: 12px 24px;
-                    background-color: rgba(75, 182, 77, 0.4);
-                    cursor: pointer;
+                .update-button {
+                    padding: 12px 25px;
+                    background-color: #007bff;
+                    color: #ffffff;
                     border: none;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
 
                     &:hover {
-                        background-color: rgba(75, 182, 77, 0.6);
+                        background-color: #0056b3;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
                     }
                 }
             }
@@ -40,31 +51,37 @@
             .info {
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
 
-                span {
+                .info-item {
                     display: flex;
                     align-items: center;
-                    gap: 20px;
-                }
+                    justify-content: space-between;
+                    gap: 10px;
+                    padding: 10px 15px;
+                    background-color: #f8f9fa;
+                    border-radius: 8px;
+                    font-size: 1.4rem;
 
-                img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    object-fit: cover;
+                    span {
+                        font-weight: bold;
+                        color: #495057;
+                    }
+
+                    b {
+                        font-weight: 500;
+                        color: #212529;
+                    }
+
+                    img {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        border: 2px solid #007bff;
+                    }
                 }
             }
-        }
-    }
-    .chatContainer {
-        flex: 2;
-        background-color: #fcf5f3;
-        height: 100%;
-
-        .wrapper {
-            padding: 0px 20px;
-            height: 100%;
         }
     }
 }

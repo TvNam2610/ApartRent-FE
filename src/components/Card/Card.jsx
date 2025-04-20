@@ -6,19 +6,35 @@ import bed from '../../assets/img/bed.png';
 import bath from '../../assets/img/bath.png';
 import size from '../../assets/img/size.png';
 import floor from '../../assets/img/floor.png';
-import save from '../../assets/img/save.png';
-import chat from '../../assets/img/chat.png';
-
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import './Card.scss';
 import { Link } from 'react-router-dom';
 import { formatCurrencyVN } from '../../lib/formatCurrency';
-
+import apiRequest from '../../lib/apiRequest';
+import { fToNow } from '../../lib/formatTime';
 const PropertyCard = ({ property }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isSaved, setIsSaved] = useState(false);
+    // Hàm xử lý lưu hoặc xóa bài viết khỏi danh sách yêu thích
+    const handleSavePost = async () => {
+        try {
+            const response = await apiRequest('/posts/save-post', {
+                method: 'POST',
+                data: {
+                    postId: property.id,
+                },
+            });
+            setIsSaved(!isSaved);
 
+            toast.success(response.data.message);
+        } catch (error) {
+            console.error('Error saving post:', error);
+            alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
+        }
+    };
     // Chuyển dữ liệu về realEstate
     const realEstate = property.realEstate;
-    console.log(realEstate);
 
     const handleNextImage = () => {
         if (realEstate && realEstate.images && realEstate.images.length > 0) {
@@ -59,6 +75,10 @@ const PropertyCard = ({ property }) => {
                 )}
             </div>
             <div className="property-card__details">
+                {realEstate.status === 'FOR_SALE' && <div className="property-card__badge sale">SALE</div>}
+                {realEstate.status === 'FOR_RENT' && <div className="property-card__badge rent">RENT</div>}
+                <span className="date">{fToNow(property.createAt)} ago</span>
+
                 <div className="property-card__title">
                     <Link style={{ textDecoration: 'none', color: '#555' }} to={`/posts/${property.id}`}>
                         {property.title}
@@ -86,32 +106,16 @@ const PropertyCard = ({ property }) => {
                         {realEstate.floor ? `Tầng ${realEstate.floor}` : 'N/A'}
                     </span>
                 </div>
-                <div className="property-card__features">
-                    {realEstate.features && realEstate.features.length > 0 ? (
-                        realEstate.features.slice(0, 5).map((feature, index) => (
-                            <span key={index} className="property-card__feature">
-                                {feature}
-                            </span>
-                        ))
-                    ) : (
-                        <span className="property-card__feature">No features available</span>
-                    )}
-                    {realEstate.features && realEstate.features.length > 5 && (
-                        <span className="property-card__feature">+{realEstate.features.length - 5}</span>
-                    )}
-                </div>
+
                 <div className="property-card__footer">
                     <span className="price">
                         {realEstate.price ? formatCurrencyVN(realEstate.price) : 'N/A'}
                         {realEstate.status === 'FOR_RENT' ? '/ tháng' : ''}
                     </span>
                     <span className="icons">
-                        <div className="icon">
-                            <img src={save} alt="Save icon" />
-                        </div>
-                        <div className="icon">
-                            <img src={chat} alt="Chat icon" />
-                        </div>
+                        <button className="icon" onClick={handleSavePost}>
+                            {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                        </button>
                     </span>
                 </div>
             </div>

@@ -1,10 +1,8 @@
-// import Footer from '../../components/Footer/Footer';
-import List from '../../components/List/List';
 import './Profile.scss';
-import Chat from '../../components/Chat/Chat';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { Link, useNavigate } from 'react-router-dom';
+import Wallet from '../../components/Wallet/Wallet';
 
 function Profile() {
     const { currentUser } = useContext(AuthContext);
@@ -15,6 +13,7 @@ function Profile() {
             navigate('/login');
         }
     }, [currentUser, navigate]);
+
     return (
         currentUser && (
             <>
@@ -24,43 +23,39 @@ function Profile() {
                             <div className="title">
                                 <h1>User Information</h1>
                                 <Link to="/profile/update">
-                                    <button>Update Profile</button>
+                                    <button className="update-button">Update Profile</button>
                                 </Link>
                             </div>
                             <div className="info">
-                                <span>
-                                    Avatar:
-                                    <img src={currentUser.avatar} alt="" />
-                                </span>
-                                <span>
-                                    Username: <b>{currentUser.username}</b>
-                                </span>
-                                <span>
-                                    Email: <b>{currentUser.email}</b>
-                                </span>
+                                <div className="info-item">
+                                    <span>Avatar:</span>
+                                    <img src={currentUser.avatar} alt="Avatar" />
+                                </div>
+                                <div className="info-item">
+                                    <span>Username:</span>
+                                    <b>{currentUser.username}</b>
+                                </div>
+                                <div className="info-item">
+                                    <span>Email:</span>
+                                    <b>{currentUser.email}</b>
+                                </div>
+                                <div className="info-item">
+                                    <span>Số điện thoại:</span>
+                                    <b>{currentUser.phone || '0971926588'}</b>
+                                </div>
+                                <div className="info-item">
+                                    <span>Địa chỉ:</span>
+                                    <b>
+                                        {currentUser.address?.city || 'Chưa có dữ liệu'},{' '}
+                                        {currentUser.address?.district || 'Chưa có dữ liệu'},{' '}
+                                        {currentUser.address?.ward || 'Chưa có dữ liệu'}
+                                    </b>
+                                </div>
                             </div>
-
-                            <div className="title">
-                                <h1>My List</h1>
-                                <Link to="/profile/add">
-                                    <button>Create New Post</button>
-                                </Link>
-                            </div>
-
-                            <List />
-                            <div className="title">
-                                <h1>Save List</h1>
-                            </div>
-                            <List />
                         </div>
                     </div>
-                    <div className="chatContainer">
-                        <div className="wrapper">
-                            <Chat />
-                        </div>
-                    </div>
+                    <Wallet />
                 </div>
-                {/* <Footer /> */}
             </>
         )
     );

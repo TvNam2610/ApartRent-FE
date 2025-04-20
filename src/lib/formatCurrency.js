@@ -10,6 +10,10 @@ export function formatCurrencyVN(number) {
     }
 }
 
+export const formatCurrency = (val) =>
+    typeof val === 'number' ? val.toLocaleString() + ' đ' : '0 đ';
+  
+
 // Ví dụ sử dụng
 const price1 = 2000000000;
 const price2 = 5000000;

@@ -1,163 +1,166 @@
 .property-card {
-    display: flex;
-    background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    width: 350px;
+}
+
+.property-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.property-card__image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.property-card__image img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-    &__image {
-        position: relative;
-        width: 300px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.property-card__prev,
+.property-card__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 1.5em;
+    padding: 0.2em 0.4em;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+}
 
-        &__badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: green;
-            color: white;
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.property-card__prev {
+    left: 10px;
+}
 
-        // Nút điều hướng ảnh
-        button {
-            position: absolute;
-            top: 50%;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 2px 8px;
-            cursor: pointer;
-            font-size: 18px;
-            z-index: 10;
-            transform: translateY(-50%);
-            border-radius: 50%;
+.property-card__next {
+    right: 10px;
+}
 
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.8);
-            }
-        }
-        .property-card__prev {
-            left: 5px;
-        }
-
-        .property-card__next {
-            right: 5px;
-        }
+.property-card__details {
+    position: relative;
+    padding: 16px;
+    margin-top: 25px;
+    .date {
+        font-size: 13px;
+        position: absolute;
+        top: -13px;
+        right: 10px;
+        color: #666;
     }
+}
 
-    &__title {
-        margin-top: 15px;
-        font-size: 20px;
-        font-weight: bold;
-        color: #333;
-    }
-    &__location {
-        display: flex;
-        gap: 8px;
-        color: #777;
-        font-size: 15px;
-        margin-bottom: 20px;
-    }
+.property-card__title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 8px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    height: 40px;
+    display: -webkit-box;
+    line-height: 20px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: unset;
+}
 
-    &__info {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: black;
-        img {
-            margin-right: 5px;
-        }
-        span {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-    }
-    &__details {
-        padding: 0 15px;
-        display: flex;
-        flex-direction: column;
-        width: 60%;
+.property-card__location {
+    font-size: 0.9em;
+    color: #888;
+    display: flex;
+    align-items: center;
+}
 
-        img {
-            width: 18px;
-        }
-        img.floor {
-            width: 24px;
-        }
+.property-card__location img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
 
-        .property-card__features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
+.property-card__info {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    color: #555;
+    font-size: 0.9em;
+}
 
-            .property-card__feature {
-                background-color: #f1f1f1;
-                border-radius: 4px;
-                padding: 5px;
-                font-size: 12px;
-                color: #4670e4;
-            }
-        }
-    }
-    &__footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 10px;
+.property-card__info span {
+    display: flex;
+    align-items: center;
+}
 
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            color: #4571bb;
-        }
+.property-card__info img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
 
-        &__action {
-            background-color: #4571bb;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
+.property-card__features {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
 
-            &:hover {
-                background-color: #0056b3;
-            }
-        }
+.property-card__feature {
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #555;
+}
 
-        .icons {
-            display: flex;
-            align-items: center;
+.property-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
 
-            .icon {
-                padding: 4px 5px 1px 5px;
-                border-radius: 6px;
-                align-items: center;
-                cursor: pointer;
-                margin: 0 10px;
-                border: 1px solid #333;
+.price {
+    color: #2c3e50;
+    font-size: 20px;
+    color: #0c61e8ca;
+}
 
-                &:hover img {
-                    color: var(--primary);
-                }
-            }
-        }
-    }
+.icons .icon {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.icons .icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.property-card__badge {
+    position: absolute;
+    top: -26%;
+    left: 15px;
+    font-size: 14px;
+    padding: 14px 6px;
+    color: white;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.property-card__badge.sale {
+    background-color: #3a86ff; /* màu xanh cho Sale */
+}
+
+.property-card__badge.rent {
+    background-color: #ff9f1c; /* màu cam cho Rent */
 }

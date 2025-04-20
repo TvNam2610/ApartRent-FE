@@ -48,7 +48,7 @@
                             margin-top: 10px;
                             font-size: 24px;
                             font-weight: bold;
-                            color: rgba(254, 205, 81, 0.82);
+                            color: #4571bb;
                         }
                     }
 
@@ -114,13 +114,8 @@
             }
 
             .list-feature {
-                margin-top: 20px;
-
                 .feature {
-                    background-color: rgba(254, 205, 81, 0.82);
-                    color: #fff;
-                    padding: 8px 15px;
-                    border-radius: 5px;
+                    color: #333;
                     margin-bottom: 10px;
                     display: inline-block;
                 }
@@ -135,7 +130,7 @@
             }
 
             .buttons {
-                margin-top: 20px;
+                margin-top: 10px;
                 display: flex;
                 gap: 15px;
 
@@ -148,19 +143,23 @@
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
-                    background-color: rgba(254, 205, 81, 0.82);
-                    color: #fff;
-                    font-size: 16px;
+                    font-size: 15px;
                     transition: background-color 0.3s;
-
-                    img {
-                        width: 20px;
-                        margin-right: 10px;
-                    }
-
+                    font-size: 16px;
+                    gap: 10px;
                     &:hover {
-                        background-color: rgba(254, 205, 81, 0.82);
+                        color: #fff;
+                        background-color: #4571bb;
                     }
+                }
+                button.numberPhone {
+                    margin-top: 10px;
+                    padding: 20px 0;
+                    gap: 10px;
+                    color: #f1f1f1;
+                    font-size: 18px;
+                    font-weight: bold;
+                    background-color: #4571bb;
                 }
             }
         }

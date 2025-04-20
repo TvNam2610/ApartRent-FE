@@ -1,6 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from '../../assets/img/loogo.png';
-import { FaHeart, FaShoppingCart } from 'react-icons/fa';
+import { FaBookmark } from 'react-icons/fa';
 import './Header.scss';
 
 import Tippy from '@tippyjs/react/headless';
@@ -10,7 +10,6 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
 
 const Header = () => {
-    const location = useLocation();
     const { currentUser, updateUser } = useContext(AuthContext);
     const handleLogin = () => {
         window.location.href = '/login';
@@ -25,45 +24,44 @@ const Header = () => {
         }
     };
 
-    const isActive = (pathname) => location.pathname === pathname;
     return (
         <header className="header">
             <div>
                 <div className="header__logo">
-                    <Link to="/">
+                    <NavLink to="/">
                         <img src={logo} alt="Logo" />
-                    </Link>
+                    </NavLink>
                 </div>
                 <nav className="header__nav">
-                    <Link to="/for-buy" className={isActive('/for-buy') ? 'active' : ''}>
-                        Mua
-                    </Link>
-                    <Link to="/for-rent" className={isActive('/for-rent') ? 'active' : ''}>
-                        Thuê
-                    </Link>
-                    <Link href="#lien-he">Liên hệ</Link>
-                    <Link href="#khuyen-mai">Khuyến mãi</Link>
-                    <Link href="#tin-tuc">Tin tức</Link>
-                    <Link href="#ho-tro">Hỗ trợ</Link>
-                    <Link href="#thu-tuc-online">Thủ tục Online</Link>
+                    <NavLink to="/">Trang chủ</NavLink>
+                    <NavLink to="/posts">Mua/Thuê</NavLink>
+                    <NavLink to="/t">Liên hệ</NavLink>
+                    <NavLink to="/d">Khuyến mãi</NavLink>
+                    <NavLink to="/d">Tin tức</NavLink>
+                    <NavLink to="/f">Hỗ trợ</NavLink>
                 </nav>
             </div>
             <div className="header__actions">
-                <FaHeart className="icon" />
-                <FaShoppingCart className="icon" />
+                <NavLink to="/savePost">
+                    <FaBookmark className="icon" />
+                </NavLink>
+
                 {currentUser ? (
                     <div className="user">
                         <Tippy
                             interactive={true}
-                            placement="bottom-start"
+                            placement="bottom-end"
                             render={(attrs) => (
                                 <div className="user-dropdown" tabIndex="-1" {...attrs}>
-                                    <Link to="/profile" className="dropdown-item">
+                                    <NavLink to="/profile" className="dropdown-item">
                                         Hồ sơ
-                                    </Link>
-                                    <Link onClick={handleLogout} to="/" className="dropdown-item">
+                                    </NavLink>
+                                    <NavLink to="/chat" className="dropdown-item">
+                                        Chat
+                                    </NavLink>
+                                    <NavLink onClick={handleLogout} to="/" className="dropdown-item">
                                         Đăng Xuất
-                                    </Link>
+                                    </NavLink>
                                 </div>
                             )}
                         >
@@ -82,6 +80,10 @@ const Header = () => {
                         Đăng nhập
                     </button>
                 )}
+
+                <NavLink className="newPost" to="/profile/add">
+                    Đăng tin
+                </NavLink>
             </div>
         </header>
     );

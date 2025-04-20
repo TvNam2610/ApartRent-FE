@@ -1,0 +1,45 @@
+.price-dropdown {
+    position: relative;
+    display: inline-block;
+
+    .dropdown-button {
+        font-weight: 600;
+        padding: 11px 12px;
+        font-size: 16px;
+        color: #444444;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 120px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e2e6ea;
+        }
+
+        .arrow {
+            font-size: 12px;
+            margin-left: 8px;
+            color: #888;
+        }
+    }
+
+    .dropdown-content {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 10;
+        width: 300px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 4px;
+    }
+}
