@@ -164,3 +164,12 @@
 .property-card__badge.rent {
     background-color: #ff9f1c; /* màu cam cho Rent */
 }
+.property-card__location span {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+  

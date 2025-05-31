@@ -15,32 +15,31 @@ const Callback = () => {
 
     useEffect(() => {
         // Nếu có status, thực hiện gọi API để xử lý callback
-        if (status) {
-            const fetchCallbackData = async () => {
-                try {
-                    // Gửi request đến backend để xử lý callback
-                    console.log('Fetching callback data with:', userId, amount, status);
-                    const response = await axios.post(
-                        `http://localhost:8800/api/wallet/callback?userId=${userId}&amount=${amount}&status=${status}`,
-                    );
 
-                    // Kiểm tra trạng thái từ server và hiển thị thông báo cho người dùng
-                    if (response.status === 200) {
-                        setPaymentStatus('success');
-                        setMessage('Thanh toán thành công.');
-                    } else {
-                        setPaymentStatus('failed');
-                        setMessage('Thanh toán thất bại.');
-                    }
-                } catch (error) {
-                    console.error('Error processing callback:', error);
+        const fetchCallbackData = async () => {
+            try {
+                // Gửi request đến backend để xử lý callback
+
+                const response = await axios.post(
+                    `http://localhost:8800/api/wallet/callback?userId=${userId}&amount=${amount}&status=${status}`,
+                );
+
+                // Kiểm tra trạng thái từ server và hiển thị thông báo cho người dùng
+                if (response.status === 200) {
+                    setPaymentStatus('success');
+                    setMessage('Thanh toán thành công.');
+                } else {
                     setPaymentStatus('failed');
-                    setMessage('Lỗi trong quá trình xử lý callback.');
+                    setMessage('Thanh toán thất bại.');
                 }
-            };
+            } catch (error) {
+                console.error('Error processing callback:', error);
+                setPaymentStatus('failed');
+                setMessage('Lỗi trong quá trình xử lý callback.');
+            }
+        };
 
-            fetchCallbackData();
-        }
+        fetchCallbackData();
     }, [status, userId, amount]);
 
     return (

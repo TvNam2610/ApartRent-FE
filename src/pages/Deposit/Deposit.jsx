@@ -15,14 +15,14 @@ function Deposit() {
     // Lấy thông tin ví người dùng từ API
     const fetchWallet = async () => {
         try {
-            const response = await axios.get(`http://localhost:8800/api/wallet/${currentUser.id}`, {
+            const response = await axios.get(`http://localhost:8800/api/wallet/?userId=${currentUser.id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
-            if (response.data.success) {
-                setBalance(response.data.data.balance);
+            if (response) {
+                setBalance(response.data[0].balance);
             }
         } catch (error) {
             console.error('Lỗi khi lấy thông tin ví:', error);
@@ -32,7 +32,7 @@ function Deposit() {
 
     useEffect(() => {
         fetchWallet(); // Lấy thông tin ví khi component render
-    }, []); // Mỗi lần render, chúng ta gọi API để lấy ví
+    }, [currentUser.id]); // Mỗi lần render, chúng ta gọi API để lấy ví
 
     // Kiểm tra URL để xác nhận việc thanh toán thành công
     useEffect(() => {
@@ -127,7 +127,7 @@ function Deposit() {
                 <div className="quick-select">
                     <h3>Hoặc chọn nhanh</h3>
                     <div className="quick-select-options">
-                        {[100000, 300000, 500000, 1000000, 2000000, 3000000, 5000000].map((value) => (
+                        {[10000,100000, 300000, 500000, 1000000, 2000000, 3000000, 5000000].map((value) => (
                             <button
                                 key={value}
                                 className={`option ${selectedAmount === value ? 'selected' : ''}`}

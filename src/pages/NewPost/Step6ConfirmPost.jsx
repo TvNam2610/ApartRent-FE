@@ -58,7 +58,7 @@ const Step6Confirm = ({ formData, setFormData, onPrev }) => {
 
             toast.success('🎉 Đăng tin thành công!');
             localStorage.removeItem('newPostStep');
-            navigate('/profile');
+            navigate('/seller/post-manager');
         } catch (error) {
             console.error(error);
             toast.error('❌ Có lỗi xảy ra khi đăng tin. Vui lòng thử lại.');

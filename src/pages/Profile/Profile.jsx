@@ -14,6 +14,8 @@ function Profile() {
         }
     }, [currentUser, navigate]);
 
+    console.log(currentUser)
+
     return (
         currentUser && (
             <>

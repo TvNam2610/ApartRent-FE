@@ -7,21 +7,17 @@ import AreaDropdown from './AreaDropdown/AreaDropdown';
 // eslint-disable-next-line react/prop-types
 const FilterBar = ({ onFilterChange }) => {
     const [realEstateStatus, setRealEstateStatus] = useState('');
-    const [priceRange, setPriceRange] = useState('');
+    const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
     const [searchQuery, setSearchQuery] = useState('');
     const [bedrooms, setBedrooms] = useState('');
-    const [areaRange, setAreaRange] = useState('');
+    const [areaRange, setAreaRange] = useState({ minArea: '', maxArea: '' });
 
     // Hàm cập nhật bộ lọc và gọi callback
     const handleFilterChange = () => {
-        const { minPrice, maxPrice } = priceRange;
-        const { minArea, maxArea } = areaRange;
         onFilterChange({
             realEstateStatus,
-            minPrice,
-            maxPrice,
-            minArea,
-            maxArea,
+            ...priceRange, // Lấy minPrice và maxPrice từ priceRange
+            ...areaRange, // Lấy minArea và maxArea từ areaRange
             searchQuery,
             bedrooms,
         });

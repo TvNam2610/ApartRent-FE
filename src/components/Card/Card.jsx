@@ -13,9 +13,29 @@ import { Link } from 'react-router-dom';
 import { formatCurrencyVN } from '../../lib/formatCurrency';
 import apiRequest from '../../lib/apiRequest';
 import { fToNow } from '../../lib/formatTime';
+import { slugify } from '../../utils/seoUtils';
+
+
 const PropertyCard = ({ property }) => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    // const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isSaved, setIsSaved] = useState(false);
+
+    const userId = JSON.parse(localStorage.getItem('user')).id;
+
+    // useEffect(() => {
+    //     const checkFavoriteStatus = async () => {
+    //       try {
+    //         const response = await apiRequest(`/posts/is-favorite?userId=${userId}&postId=${property.id}`);
+    //         setIsSaved(response.data.isFavorite);
+    //       } catch (error) {
+    //         console.error('Error checking favorite status:', error);
+    //       }
+    //     };
+      
+    //     if (userId) checkFavoriteStatus();
+    //   }, [property.id, userId]);
+      
+
     // Hàm xử lý lưu hoặc xóa bài viết khỏi danh sách yêu thích
     const handleSavePost = async () => {
         try {
@@ -23,6 +43,7 @@ const PropertyCard = ({ property }) => {
                 method: 'POST',
                 data: {
                     postId: property.id,
+                    userId: userId,
                 },
             });
             setIsSaved(!isSaved);
@@ -32,52 +53,24 @@ const PropertyCard = ({ property }) => {
             console.error('Error saving post:', error);
             alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
         }
+        
     };
-    // Chuyển dữ liệu về realEstate
-    const realEstate = property.realEstate;
-
-    const handleNextImage = () => {
-        if (realEstate && realEstate.images && realEstate.images.length > 0) {
-            setCurrentImageIndex((prevIndex) => (prevIndex === realEstate.images.length - 1 ? 0 : prevIndex + 1));
-        }
-    };
-
-    const handlePreviousImage = () => {
-        if (realEstate && realEstate.images && realEstate.images.length > 0) {
-            setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? realEstate.images.length - 1 : prevIndex - 1));
-        }
-    };
-
-    if (!realEstate) {
-        return <div>No real estate data available</div>;
-    }
 
     return (
         <div className="property-card">
             <div className="property-card__image">
-                <Link to={`/posts/${property.id}`}>
-                    {realEstate.images && realEstate.images.length > 0 ? (
-                        <img src={realEstate.images[currentImageIndex]} alt={property.title} />
+                <Link to={`/posts/${slugify(property.title)}-id${property.id}`}>
+                    {property.thumbnail ? (
+                        <img src={property.thumbnail} alt={property.title} />
                     ) : (
                         <p>No images available</p>
                     )}
                 </Link>
-
-                {realEstate.images && realEstate.images.length > 0 && (
-                    <>
-                        <button className="property-card__prev" onClick={handlePreviousImage}>
-                            &lt;
-                        </button>
-                        <button className="property-card__next" onClick={handleNextImage}>
-                            &gt;
-                        </button>
-                    </>
-                )}
-            </div>
+            </div>  
             <div className="property-card__details">
-                {realEstate.status === 'FOR_SALE' && <div className="property-card__badge sale">SALE</div>}
-                {realEstate.status === 'FOR_RENT' && <div className="property-card__badge rent">RENT</div>}
-                <span className="date">{fToNow(property.createAt)} ago</span>
+                {property.realEstateStatus === 'FOR_SALE' && <div className="property-card__badge sale">SALE</div>}
+                {property.realEstateStatus === 'FOR_RENT' && <div className="property-card__badge rent">RENT</div>}
+                <span className="date">{fToNow(property.startDate)} ago</span>
 
                 <div className="property-card__title">
                     <Link style={{ textDecoration: 'none', color: '#555' }} to={`/posts/${property.id}`}>
@@ -86,34 +79,39 @@ const PropertyCard = ({ property }) => {
                 </div>
                 <p className="property-card__location">
                     <img src={location} alt="Location icon" />
-                    <span>{realEstate.location || 'Location not available'}</span>
+                    <span>{property.location || 'Location not available'}</span>
                 </p>
                 <div className="property-card__info">
                     <span>
                         <img src={bed} alt="Bedroom icon" />
-                        {realEstate.bedrooms || 'N/A'}
+                        {property.bedrooms || 'N/A'}
                     </span>
                     <span>
                         <img src={bath} alt="Bathroom icon" />
-                        {realEstate.bathrooms || 'N/A'}
+                        {property.bathrooms || 'N/A'}
                     </span>
                     <span>
                         <img src={size} alt="Size icon" />
-                        {realEstate.area ? `${realEstate.area} m²` : 'N/A'}
+                        {property.area ? `${property.area} m²` : 'N/A'}
                     </span>
                     <span>
                         <img className="floor" src={floor} alt="Floor icon" />
-                        {realEstate.floor ? `Tầng ${realEstate.floor}` : 'N/A'}
+                        {property.floor ? `Tầng ${property.floor}` : 'N/A'}
                     </span>
                 </div>
 
                 <div className="property-card__footer">
                     <span className="price">
-                        {realEstate.price ? formatCurrencyVN(realEstate.price) : 'N/A'}
-                        {realEstate.status === 'FOR_RENT' ? '/ tháng' : ''}
+                        {property.realEstatePrice ? formatCurrencyVN(property.realEstatePrice) : 'N/A'}
+                        {property.realEstateStatus === 'FOR_RENT' ? '/ tháng' : ''}
                     </span>
                     <span className="icons">
-                        <button className="icon" onClick={handleSavePost}>
+                        <button
+                            className={`btn btn-sm ${isSaved ? 'btn-warning' : 'btn-outline-secondary'} rounded-circle`}
+                            title={isSaved ? 'Bỏ yêu thích' : 'Lưu yêu thích'}
+                            onClick={handleSavePost}
+                            style={{ fontSize: '1.2rem', padding: '6px 10px' }}
+                        >
                             {isSaved ? <FaBookmark /> : <FaRegBookmark />}
                         </button>
                     </span>

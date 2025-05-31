@@ -13,7 +13,7 @@ import ProfileUpdate from './pages/ProfileUpdate/ProfileUpdate.jsx';
 import Login from './pages/Login/Login.jsx';
 import NewPostPage from './pages/NewPost/NewPost.jsx';
 import Chat from './pages/Chat/Chat.jsx';
-import { listPageLoader, singlePageLoader } from './lib/loaders.js';
+import { listPageLoader } from './lib/loaders.js';
 import SavedPost from './pages/SavePost/SavePost.jsx';
 import Deposit from './pages/Deposit/Deposit.jsx';
 import Callback from './pages/Callback/Callback.jsx';
@@ -47,9 +47,8 @@ function App() {
                     loader: listPageLoader,
                 },
                 {
-                    path: 'posts/:id',
+                    path: 'posts/:slugAndId',
                     element: <Detail />,
-                    loader: singlePageLoader,
                 },
             ],
         },

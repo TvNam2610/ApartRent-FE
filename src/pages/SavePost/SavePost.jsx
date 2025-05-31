@@ -19,15 +19,7 @@ function SavedPost() {
             setLoading(true);
             setError(null);
             try {
-                const response = await apiRequest('/favorite/get-favorite', {
-                    method: 'GET',
-                    body: JSON.stringify({
-                        userId: user.userId,
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+                const response = await apiRequest(`/posts/favorites/${user.id}`);
                 console.log(response.data);
                 if (response.data && Array.isArray(response.data)) {
                     setSavedProperties(response.data);

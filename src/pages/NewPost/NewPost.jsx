@@ -65,7 +65,13 @@ function NewPostPage() {
                         </div>
                     ))}
                 </div>
-                <button className="exit-btn" onClick={() => navigate('/')}>
+                <button
+                    className="exit-btn"
+                    onClick={() => {
+                        navigate('/'); // Chuyển hướng về trang chủ hoặc trang quản lý tin
+                        localStorage.removeItem('newPostStep'); // Xóa bước hiện tại trong localStorage
+                    }}
+                >
                     THOÁT
                 </button>
             </div>
@@ -98,7 +104,12 @@ function NewPostPage() {
                     />
                 )}
                 {step === 5 && (
-                    <Step5PackageSelection formData={formData} setFormData={setFormData} onNext={nextStep} onPrev={prevStep} />
+                    <Step5PackageSelection
+                        formData={formData}
+                        setFormData={setFormData}
+                        onNext={nextStep}
+                        onPrev={prevStep}
+                    />
                 )}
 
                 {step === 6 && (
@@ -106,7 +117,11 @@ function NewPostPage() {
                         formData={formData}
                         setFormData={setFormData}
                         onPrev={prevStep}
-                        onNext={() => navigate('/')} // Sau khi thanh toán có thể chuyển về trang chủ hoặc trang quản lý tin
+                        onNext={() => {
+                            // Xóa bước hiện tại trong localStorage
+                            localStorage.removeItem('newPostStep');
+                            navigate('/');
+                        }} // Sau khi thanh toán có thể chuyển về trang chủ hoặc trang quản lý tin
                     />
                 )}
             </div>

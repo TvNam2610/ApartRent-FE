@@ -38,7 +38,7 @@ function Home() {
                         Quý khách đăng ký tham quan trực tiếp. Khám phá các căn hộ và nhà ở đa dạng tại đây để tìm kiếm
                         lựa chọn phù hợp nhất với nhu cầu của bạn.
                     </p>
-                    <button onClick={handleRegistrationClick} className="registration-section__button">
+                    <button onClick={handleRegistrationClick} className="registration-section__button btn btn-primary btn-lg mb-3 ">
                         Đăng ký tham quan
                     </button>
                 </div>

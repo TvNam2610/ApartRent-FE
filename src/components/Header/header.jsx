@@ -56,8 +56,8 @@ const Header = () => {
                                     <NavLink to="/profile" className="dropdown-item">
                                         Hồ sơ
                                     </NavLink>
-                                    <NavLink to="/chat" className="dropdown-item">
-                                        Chat
+                                    <NavLink to="/seller/post-manager" className="dropdown-item">
+                                        Quản lý bài đăng
                                     </NavLink>
                                     <NavLink onClick={handleLogout} to="/" className="dropdown-item">
                                         Đăng Xuất

@@ -86,7 +86,7 @@ const Banner = () => {
                     </div>
                 </div>
                 <button
-                    className="banner__search-button"
+                    className="banner__search-button btn btn-primary btn-lg rounded-pill" 
                     onClick={handleSearch} // Khi nhấn nút tìm kiếm, gọi hàm handleSearch
                 >
                     <FaSearch className="fas fa-search"></FaSearch>
